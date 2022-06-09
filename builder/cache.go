@@ -1,19 +1,19 @@
 package builder
 
 import (
-	"path"
+	"path/filepath"
 )
 
 var (
 	Ccache = Cache{
 		Name:           "ccache",
-		CacheDir:       path.Join(BuildUserHome, ".ccache"),
+		CacheDir:       filepath.Join(BuildUserHome, ".ccache"),
 		LegacyCacheDir: "/root/.ccache",
 	}
 
 	Sccache = Cache{
 		Name:           "sccache",
-		CacheDir:       path.Join(BuildUserHome, ".cache", "sccache"),
+		CacheDir:       filepath.Join(BuildUserHome, ".cache", "sccache"),
 		LegacyCacheDir: "/root/.cache/sccache",
 	}
 

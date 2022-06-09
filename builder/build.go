@@ -34,7 +34,7 @@ func (p *Package) CreateDirs(o *Overlay) error {
 
 	for _, c := range Caches {
 		if p.Type == PackageTypeXML {
-			dirs = append(dirs, c.LegacyCacheDir)
+			dirs = append(dirs, filepath.Join(o.MountPoint, c.LegacyCacheDir[1:]))
 		} else {
 			dirs = append(dirs, filepath.Join(o.MountPoint, c.CacheDir[1:]))
 		}
