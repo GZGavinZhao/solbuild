@@ -48,9 +48,16 @@ func NewSimple(uri, validator string, legacy bool) (*SimpleSource, error) {
 	if err != nil {
 		return nil, err
 	}
+	fileName := filepath.Base(uriObj.Path)
+	//support URI fragments for renaming sources
+	if uriObj.Fragment != "" {
+		fileName = uriObj.Fragment
+		uriObj.Fragment = ""
+	}
+	
 	ret := &SimpleSource{
-		URI:       uri,
-		File:      filepath.Base(uriObj.Path),
+		URI:       uriObj.String(),
+		File:      fileName,
 		legacy:    legacy,
 		validator: validator,
 		url:       uriObj,
@@ -141,7 +148,7 @@ func (s *SimpleSource) download(destination string) error {
 	hnd.Setopt(curl.OPT_PROGRESSFUNCTION, progress)
 	// Enforce internal 300 second connect timeout in libcurl
 	hnd.Setopt(curl.OPT_CONNECTTIMEOUT, 0)
-	hnd.Setopt(curl.OPT_USERAGENT, fmt.Sprintf("solbuild 1.5.1.0"))
+	hnd.Setopt(curl.OPT_USERAGENT, fmt.Sprintf("solbuild 1.5.2.0"))
 
 	pbar.Start()
 	defer func() {
